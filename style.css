@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Titan+One&display=swap');
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+body {
+  padding: 5rem;
+  background-color: #0e0d14;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+
+.border {
+  outline: 1px solid #aaa;
+}
+
+.generated-password {
+  font-size: 1.12rem;
+  color: #aaa;
+  letter-spacing: 1px;
+}
+
+.pointer-cursor {
+  cursor: pointer;
+}
+
+.no-cursor {
+  pointer-events: none;
+}
+
+.flex,
+.length-section,
+.pass-length,
+.include-section,
+.include-section>div,
+.generator-section,
+.password-strength,
+.strength-bar,
+.generated-section,
+footer {
+  display: flex;
+}
+
+.flex-direction,
+.length-section,
+.include-section,
+.generator-section,
+footer {
+  flex-direction: column;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-justify-space-between,
+.pass-length,
+.password-strength,
+.generated-section {
+  justify-content: space-between;
+}
+
+.pass-length {
+  align-items: center;
+
+  & p {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  & .character-length {
+    font-size: 2rem;
+  }
+}
+
+.generated-section {
+  & .clip-password {
+    & svg>path {
+      fill: white;
+    }
+  }
+}
+
+.container {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  padding: 3em 0;
+}
+
+.title {
+  color: #727178;
+  font-size: 1rem;
+}
+
+.generated-section,
+.generator-section {
+  width: 400px;
+  min-width: 300px;
+  background-color: #24232a;
+  padding: 1em 2em;
+}
+
+.length-section,
+.generator-section {
+  gap: 1rem;
+}
+
+.include-section>div,
+.include-section {
+  gap: 1rem;
+}
+
+.password-strength {
+  background-color: #18171f;
+  align-items: center;
+  padding: 1rem 10px;
+
+  & p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #5e5d66;
+  }
+
+  & .strength-bar {
+    align-items: center;
+    text-transform: uppercase;
+    gap: 10px;
+
+    & .str-stats {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #c4c2ca;
+    }
+
+    & .stat-color {
+      padding: 4px;
+      height: 20px;
+      outline: 1px solid #aaa;
+    }
+  }
+}
+
+.generate {
+  width: 400px;
+  min-width: 300px;
+  padding: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background-color: #a5ffaf;
+  color: #26532a;
+}
+
+footer {
+  width: 100%;
+  align-items: center;
+  pointer-events: none;
+
+  & p:nth-child(1) {
+    font-size: 1.25rem;
+  }
+
+  & p:nth-child(2) {
+    font-size: 12px;
+  }
+}
+
+@media (width<600px) {
+  body {
+    padding: 0;
+    justify-content: space-evenly;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+}

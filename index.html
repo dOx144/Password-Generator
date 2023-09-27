@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="title no-cursor">Password Generator</h2>
+      <div class="generated-section">
+        <p class="generated-password pointer-cursor" id="generated-password">
+          Your Password
+        </p>
+        <div class="clip-password pointer-cursor" id="clip-password">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="1em"
+            viewBox="0 0 448 512"
+            class="bounce"
+          >
+            <!-- onclick="clipboardPass()" -->
+            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path
+              d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="generator-section">
+        <div class="length-section">
+          <div class="pass-length no-cursor">
+            <p>Character Length</p>
+            <p class="character-length" id="character-length">10</p>
+          </div>
+          <input
+            oninput="displayOut()"
+            type="range"
+            min="0"
+            max="20"
+            id="range"
+            class="range pointer-cursor"
+          />
+        </div>
+        <div class="include-section">
+          <div>
+            <input class="pointer-cursor" type="checkbox" id="uppercase" />
+            <p class="no-cursor">Include Uppercase Letters</p>
+          </div>
+          <div>
+            <input class="pointer-cursor" type="checkbox" id="lowercase" />
+            <p class="no-cursor">Include Lowercase Letters</p>
+          </div>
+          <div>
+            <input class="pointer-cursor" type="checkbox" id="numbers" />
+            <p class="no-cursor">Include Numbers</p>
+          </div>
+          <div>
+            <input class="pointer-cursor" type="checkbox" id="symbols" />
+            <p class="no-cursor">Include Symbols</p>
+          </div>
+        </div>
+        <div class="password-strength">
+          <p class="no-cursor">STRENGTH</p>
+          <div class="strength-bar">
+            <p class="str-stats no-cursor">MEDIUM</p>
+            <div class="stat-color"></div>
+            <div class="stat-color"></div>
+            <div class="stat-color"></div>
+            <div class="stat-color"></div>
+          </div>
+        </div>
+      </div>
+      <button id="generate" class="generate pointer-cursor">
+        <!-- onclick="clipStart();" -->
+        GENERATE
+      </button>
+    </div>
+    <footer>
+      <p>A project by Jake dOx:</p>
+      <p>Challenge from frontendmentor.io</p>
+    </footer>
+    <script>
+      function displayOut() {
+        document.getElementById("character-length").textContent =
+          document.getElementById("range").value;
+
+        if (document.getElementById("range").value < 6) {
+          document.querySelector(".str-stats").textContent = "WEAK";
+        }
+        if (document.getElementById("range").value > 6) {
+          document.querySelector(".str-stats").textContent = "MEDIUM";
+        }
+        if (document.getElementById("range").value > 16) {
+          document.querySelector(".str-stats").textContent = "STRONG";
+        }
+      }
+
+      const resultEl = document.getElementById("generated-password");
+      const lengthEl = document.getElementById("range");
+      const uppercaseEl = document.getElementById("uppercase");
+      const lowercaseEl = document.getElementById("lowercase");
+      const numbersEl = document.getElementById("numbers");
+      const symbolsEl = document.getElementById("symbols");
+      const generateEl = document.getElementById("generate");
+      const clipboard = document.getElementById("clip-password");
+
+      const randomFunc = {
+        lower: getRandomLower,
+        upper: getRandomUpper,
+        number: getRandomNumber,
+        symbol: getRandomSymbol,
+      };
+
+      clipboard.addEventListener("click", () => {
+        const textarea = document.createElement("textarea");
+        const password = resultEl.innerText;
+
+        if (!password) {
+          return;
+        }
+
+        textarea.value = password;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        textarea.remove();
+        alert("Password copied to clipboard");
+        document.querySelector(".bounce").classList.toggle("fa-bounce");
+      });
+
+      generate.addEventListener("click", () => {
+        const length = +lengthEl.value;
+        const hasLower = lowercaseEl.checked;
+        const hasUpper = uppercaseEl.checked;
+        const hasNumber = numbersEl.checked;
+        const hasSymbol = symbolsEl.checked;
+
+        resultEl.innerText = generatePassword(
+          hasLower,
+          hasUpper,
+          hasNumber,
+          hasSymbol,
+          length
+        );
+      });
+
+      function generatePassword(lower, upper, number, symbol, length) {
+        let generatedPassword = "";
+        const typesCount = lower + upper + number + symbol;
+        const typesArr = [{ lower }, { upper }, { number }, { symbol }].filter(
+          (item) => Object.values(item)[0]
+        );
+
+        // Doesn't have a selected type
+        if (typesCount === 0) {
+          return "";
+        }
+
+        // create a loop
+        for (let i = 0; i < length; i += typesCount) {
+          typesArr.forEach((type) => {
+            const funcName = Object.keys(type)[0];
+            generatedPassword += randomFunc[funcName]();
+          });
+        }
+
+        const finalPassword = generatedPassword.slice(0, length);
+        document.querySelector(".bounce").classList.toggle("fa-bounce");
+
+        return finalPassword;
+      }
+
+      function getRandomLower() {
+        return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+      }
+
+      function getRandomUpper() {
+        return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+      }
+
+      function getRandomNumber() {
+        return +String.fromCharCode(Math.floor(Math.random() * 10) + 48);
+      }
+
+      function getRandomSymbol() {
+        const symbols = "!@#$%^&*(){}[]=<>/,.";
+        return symbols[Math.floor(Math.random() * symbols.length)];
+      }
+    </script>
+  </body>
+</html>
