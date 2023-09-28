@@ -136,7 +136,7 @@ footer {
   & .strength-bar {
     align-items: center;
     text-transform: uppercase;
-    gap: 10px;
+    gap: 5px;
 
     & .str-stats {
       font-weight: 600;
@@ -149,6 +149,11 @@ footer {
       height: 20px;
       outline: 1px solid #aaa;
     }
+
+    & .active-stat {
+      outline: 1px solid #a5ffaf;
+      background-color: #5eb365;
+    }
   }
 }
 
@@ -160,6 +165,17 @@ footer {
   letter-spacing: 1px;
   background-color: #a5ffaf;
   color: #26532a;
+  transition: .15 ease-in;
+}
+
+.generate:hover {
+  outline: 2px solid #a5ffaf;
+  background-color: transparent;
+  color: #a5ffaf;
+}
+
+.generate:active {
+  scale: 98%;
 }
 
 footer {
