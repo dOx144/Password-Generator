@@ -52,19 +52,39 @@
         </div>
         <div class="include-section">
           <div>
-            <input class="pointer-cursor" type="checkbox" id="uppercase" />
+            <input
+              class="pointer-cursor"
+              type="checkbox"
+              id="uppercase"
+              checked
+            />
             <p class="no-cursor">Include Uppercase Letters</p>
           </div>
           <div>
-            <input class="pointer-cursor" type="checkbox" id="lowercase" />
+            <input
+              class="pointer-cursor"
+              type="checkbox"
+              id="lowercase"
+              checked
+            />
             <p class="no-cursor">Include Lowercase Letters</p>
           </div>
           <div>
-            <input class="pointer-cursor" type="checkbox" id="numbers" />
+            <input
+              class="pointer-cursor"
+              type="checkbox"
+              id="numbers"
+              checked
+            />
             <p class="no-cursor">Include Numbers</p>
           </div>
           <div>
-            <input class="pointer-cursor" type="checkbox" id="symbols" />
+            <input
+              class="pointer-cursor"
+              type="checkbox"
+              id="symbols"
+              checked
+            />
             <p class="no-cursor">Include Symbols</p>
           </div>
         </div>
@@ -72,10 +92,6 @@
           <p class="no-cursor">STRENGTH</p>
           <div class="strength-bar">
             <p class="str-stats no-cursor">MEDIUM</p>
-            <div class="stat-color"></div>
-            <div class="stat-color"></div>
-            <div class="stat-color"></div>
-            <div class="stat-color"></div>
           </div>
         </div>
       </div>
@@ -92,6 +108,7 @@
       function displayOut() {
         document.getElementById("character-length").textContent =
           document.getElementById("range").value;
+        const strBar = document.querySelector(".strength-bar");
 
         if (document.getElementById("range").value < 6) {
           document.querySelector(".str-stats").textContent = "WEAK";
@@ -134,7 +151,7 @@
         document.execCommand("copy");
         textarea.remove();
         alert("Password copied to clipboard");
-        document.querySelector(".bounce").classList.toggle("fa-bounce");
+        document.querySelector(".bounce").classList.remove("fa-bounce");
       });
 
       generate.addEventListener("click", () => {
@@ -174,7 +191,7 @@
         }
 
         const finalPassword = generatedPassword.slice(0, length);
-        document.querySelector(".bounce").classList.toggle("fa-bounce");
+        document.querySelector(".bounce").classList.add("fa-bounce");
 
         return finalPassword;
       }
